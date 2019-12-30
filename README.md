@@ -1,6 +1,6 @@
 # ezovpn - .ovpn files import/generation tool
 
-The simple tool that allows importing and generation of OpenVPN configuration files with **embedded certificates**, as this is the format
+The simple tool that allows importing and generation of OpenVPN configuration files with [**embedded certificates**](https://community.openvpn.net/openvpn/wiki/Openvpn23ManPage#lbAV), as this is the format
 that you might want to use for OpenVPN client on Android or iPhone.
 
 OpenVPN allows to include CA/Certificate/Key/TlsAuth files right into the OpenVPN configuration file. 
