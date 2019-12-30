@@ -23,7 +23,7 @@ var genFlags struct {
 var genCmd = &cobra.Command{
 	Use:     "generate",
 	Aliases: []string{"gen"},
-	Short:   "generates the config file according to template",
+	Short:   "Generates the config file according to the built-in template",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var w io.Writer
 		if gConf.OutPath == "" {

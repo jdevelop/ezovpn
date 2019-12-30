@@ -16,7 +16,7 @@ var importFlags struct {
 var importCmd = &cobra.Command{
 	Use:     "import",
 	Aliases: []string{"imp"},
-	Short:   "imports the existing VPN configuration and embeds the certificates",
+	Short:   "Imports an existing VPN configuration and embeds the certificates",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var (
 			w io.Writer
