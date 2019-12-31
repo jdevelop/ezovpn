@@ -126,7 +126,3 @@ and the example command line would be:
 ```
 ezovpn -d /etc/openvpn import -i /etc/openvpn/client.conf
 ```
-
-## Note
-
-Doesn't work with PKCS12 bundles at the moment ( should be easy to add, using base64 encoding of a PKCS12 file.
