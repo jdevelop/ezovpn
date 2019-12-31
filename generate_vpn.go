@@ -1,6 +1,7 @@
 package ezovpn
 
 import (
+	"encoding/base64"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -15,6 +16,7 @@ type ovpnData struct {
 	Cert       string
 	Key        string
 	TlsAuth    *string
+	PKCS12     *string
 	RemoteHost string
 	RemotePort int
 }
@@ -28,6 +30,7 @@ nobind
 persist-key
 persist-tun
 comp-lzo
+{{ if not .PKCS12 -}}
 <ca>
 {{.Ca -}}
 </ca>
@@ -37,6 +40,11 @@ comp-lzo
 <key>
 {{.Key -}}
 </key>
+{{ else -}}
+<pkcs12>
+{{.PKCS12 -}}
+</pkcs12>
+{{ end -}}
 {{if .TlsAuth -}}
 key-direction 1
 <tls-auth>
@@ -55,6 +63,8 @@ type FileSpec struct {
 	KeyFile string
 	// TLS Auth file name ( ta.key )
 	TAFile string
+	// PKCS12 File
+	PKCS12 string
 }
 
 // VpnSpec defines the VPN server
@@ -109,6 +119,18 @@ func GenerateVPNConfig(keysDir string, files *FileSpec, vpn *VpnSpec, out io.Wri
 				if err := readFileIn(path, &vd.Ca); err != nil {
 					return err
 				}
+			case files.PKCS12:
+				r, err := fetcher(path)
+				if err != nil {
+					return err
+				}
+				data, err := ioutil.ReadAll(r)
+				r.Close()
+				if err != nil {
+					return err
+				}
+				dataStr := formatBase64(base64.StdEncoding.EncodeToString(data))
+				vd.PKCS12 = &dataStr
 			case files.TAFile:
 				var v string
 				if err := readFileIn(path, &v); err != nil {

@@ -13,10 +13,11 @@ var genFlags struct {
 	Host  string
 	Port  int
 	Certs struct {
-		CA   string
-		Key  string
-		Cert string
-		TA   string
+		CA     string
+		Key    string
+		Cert   string
+		TA     string
+		PKCS12 string
 	}
 }
 
@@ -40,6 +41,7 @@ var genCmd = &cobra.Command{
 			CertFile: genFlags.Certs.Cert,
 			KeyFile:  genFlags.Certs.Key,
 			TAFile:   genFlags.Certs.TA,
+			PKCS12:   genFlags.Certs.PKCS12,
 		}, &ezovpn.VpnSpec{
 			Server: genFlags.Host,
 			Port:   genFlags.Port,
