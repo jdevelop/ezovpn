@@ -30,8 +30,9 @@ func init() {
 	gf.StringVar(&genFlags.Certs.Cert, "cert", "", "RSA certificate file name")
 	gf.StringVar(&genFlags.Certs.Key, "key", "", "RSA certificate key file name")
 	gf.StringVar(&genFlags.Certs.TA, "ta", "ta.key", "VPN tls-auth key file name")
+	gf.StringVar(&genFlags.Certs.PKCS12, "pkcs12", "", "PCKS12 file name")
 
-	for _, name := range []string{"cert", "key", "server"} {
+	for _, name := range []string{"server"} {
 		genCmd.MarkPersistentFlagRequired(name)
 	}
 

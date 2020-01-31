@@ -1,6 +1,7 @@
 package cmds
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -35,6 +36,9 @@ var genCmd = &cobra.Command{
 				return fmt.Errorf("can't create output file for '%s': %w", gConf.OutPath, err)
 			}
 			w = ww
+		}
+		if genFlags.Certs.PKCS12 == "" && (genFlags.Certs.CA == "" || genFlags.Certs.Key == "" || genFlags.Certs.Cert == "") {
+			return errors.New("need either PCKS12 file or a full set of args")
 		}
 		return ezovpn.GenerateVPNConfig(gConf.CertPath, &ezovpn.FileSpec{
 			CAFile:   genFlags.Certs.CA,
